@@ -114,33 +114,37 @@ class Enemy {
 			startPoints = ps;
 			nextPoint = 0;
 		}
-		void update() {
+		void update(bool frameskip) {
 			if (s == 0) { // no need to update as we aren't moving
+				return;
+			}
+			byte ds = (s + 1) / 2;
+			if (s % 2 && frameskip && !--ds) {
 				return;
 			}
 			int nx = points[0];
 			int ny = points[1];
 			if (nx > x) {
-				x += s;
+				x += ds;
 				if (nx < x) {
 					x = nx;
 				}
 			}
 			if (nx < x) {
-				x -= s;
+				x -= ds;
 				if (nx > x) {
 					x = nx;
 				}
 			}
 			
 			if (ny > y) {
-				y += s;
+				y += ds;
 				if (ny < y) {
 					y = ny;
 				}
 			}
 			if (ny < y) {
-				y -= s;
+				y -= ds;
 				if (ny > y) {
 					y = ny;
 				}
@@ -399,9 +403,7 @@ void drawWorld() {
 	gb.display.setColor(BLACK);
 	gb.display.drawRect(playerX + mapX, playerY + mapY, 4, 4);
 	for (byte i = 0; i < numEnemies; i++) {
-		if (!frameskip) {
-			enemies[i]->update();
-		}
+		enemies[i]->update(frameskip);
 		enemies[i]->draw();
 	}
 	for (byte i = 0; i < numCoins; i++) {
