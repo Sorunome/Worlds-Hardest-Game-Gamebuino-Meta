@@ -182,7 +182,7 @@ void setup() {
 }
 
 void drawLevelMenu(byte curPick) {
-	gb.display.setCursors(0, 0);
+	gb.display.setCursor(0, 0);
 	gb.display.print("Level Menu");
 	gb.display.print("\n\nLevel  \x11");
 	if(curPick < 10){
@@ -409,7 +409,7 @@ void drawWorld() {
 	for (byte i = 0; i < numCoins; i++) {
 		coins[i]->draw();
 	}
-	gb.display.setCursors(1, 1);
+	gb.display.setCursor(1, 1);
 	gb.display.setColor(WHITE, DARKGRAY);
 	gb.display.print(tries);
 	frameskip = !frameskip;
